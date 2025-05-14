@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SubUser {
+  id Int @id
+  gender String
+}
+
+model Area {
+  areaName String @id
+  basePrice Float
+  distanceFromGiu Float
+  rides Ride[]
+  subzones Subzone[]
+}
+
+model Subzone {
+  subzoneName String @id
+  area Area @relation(fields: [areaName], references: [areaName])
+  areaName String
+  subZonePrice Float
+}
+
+
+model Ride {
+  id Int @id @default(autoincrement())
+  driverId Int
+  time DateTime
+  Area Area @relation(fields: [areaName], references: [areaName])
+  areaName String
+  basePrice Float
+  seatsLeft Int
+  active Boolean @default(true)
+  fromGiu Boolean
+  girlsOnly Boolean
+}
+
+model SubCar {
+  id           String        @id @default(uuid())
+  universityId String
+  seats Int
+}
