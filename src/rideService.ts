@@ -97,6 +97,7 @@ dotenv.config();
     };
 
     const periodicDateTimeCheck = async () => {
+        console.log("Periodic check");
         const now : Date = new Date();
         let rides = await prisma.ride.findMany();
         const ridesTodayIds = rides.map(ride => ride.id);
@@ -115,12 +116,13 @@ dotenv.config();
     };
 
     const periodicTripCompletedCheck = async () => {
+        console.log("Periodic check");
         const now : Date = new Date();
         let rides = await prisma.ride.findMany();
         rides = rides.filter(ride => ride.active === true);
         rides.forEach(async (ride) => {
             const differenceInYears = ride.time.getFullYear() - now.getFullYear();
-            const differenceInMonths = ( ride.time.getMonth() + 1) - ( now.getDate() + 1);  
+            const differenceInMonths = ( ride.time.getMonth() + 1) - ( now.getMonth() + 1);  
             const differenceInDays = ride.time.getDate() - now.getDate();
             const differenceInHours = ride.time.getHours() - now.getHours();
             if( (differenceInYears == 0 && differenceInMonths == 0 && differenceInDays < 0 ) || (differenceInYears == 0 && differenceInMonths == 0 && differenceInDays == 0 && differenceInHours <= -2))
