@@ -582,7 +582,7 @@ dotenv.config();
                         data : {
                             subzoneName : args.subzoneName,
                             areaName : args.areaName,
-                            subZonePrice : args.basePrice
+                            subZonePrice : args.subZonePrice
                         }
                     });
                     shareSubzoneDetails(subzone);
